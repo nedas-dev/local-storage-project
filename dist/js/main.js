@@ -22,7 +22,7 @@ function supportsLocalStorage() {
 function getRecentSearchesList() {
     if (localStorage.getItem('recentSearches')) {
         let recentSearches = localStorage.getItem('recentSearches');
-        return JSON.parse(recentSearches).list;
+        return JSON.parse(recentSearches);
     }
     return [];
 }
@@ -31,7 +31,7 @@ function getRecentSearchesList() {
 function createOrLoadRecentSearches() {
     recentSearchString = localStorage.getItem('recentSearches');
     if (!recentSearchString) {
-        localStorage.setItem('recentSearches', '{"list": []}');
+        localStorage.setItem('recentSearches', '[]');
     } else {
         const resultsDiv = document.querySelector('div.results')
         const listOfAllSearches = getRecentSearchesList();
@@ -51,8 +51,7 @@ function createOrLoadRecentSearches() {
 function addSearchTextToLocalStorage(text) {
     let recentSearches = getRecentSearchesList();
     recentSearches.unshift(text);
-    let tempJSON = { list: recentSearches };
-    let stringJSON = JSON.stringify(tempJSON);
+    let stringJSON = JSON.stringify(recentSearches);
     localStorage.setItem('recentSearches', stringJSON);
 }
 
@@ -95,7 +94,7 @@ clearHistoryButton.addEventListener('click', (e) => {
         searchHistoryDiv.appendChild(div);
 
         if ('recentSearches' in localStorage) {
-            localStorage.setItem('recentSearches', '{"list": []}');
+            localStorage.setItem('recentSearches', '[]');
         }
     }
 })
